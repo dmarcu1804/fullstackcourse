@@ -1,12 +1,12 @@
 ```mermaid
 sequenceDiagram
-    participant browser
-    participant server
-    participant user
+    participant User
+    participant Browser
+    participant Server
 
-    User ->> browser: submits form 
-    browser ->> server: HTTP POST
-    server ->> browser 201 CREATED
-    browser ->> browser: update page
+    User ->> Browser: Submits form
+    Browser ->> Server: HTTP POST /submit_form
+    Server -->> Browser: 201 Created
+    Browser ->> Browser: Update page
 
 ```

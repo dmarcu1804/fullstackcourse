@@ -1,17 +1,15 @@
 ```mermaid
 sequenceDiagram
-    participant browser
-    participant server
-    participant user
+    participant User
+    participant Browser
+    participant Server
 
-    user ->> browser: fills out form
-    user ->> browser: clicks submit button
+    User ->> Browser: Fills out form
+    User ->> Browser: Clicks submit button
 
-    browser ->> server: HTTP POST /new_note
-    server ->> browser: HTTP 302 redirect to /exampleapp/notes
-    browser ->> server: HTTP GET /exampleapp/notes
-    server ->> browser: 200 OK
-    browser ->> user notes page
+    Browser ->> Server: HTTP POST /new_note
+    Server -->> Browser: HTTP 302 Redirect to /exampleapp/notes
+    Browser ->> Server: HTTP GET /exampleapp/notes
+    Server -->> Browser: 200 OK (response with notes data)
+    Browser -->> User: Show notes page
 
-    "main.css, main.js, data.json" performed
-```
