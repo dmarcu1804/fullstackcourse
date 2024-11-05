@@ -8,12 +8,20 @@ const Header = (props) => {
   )
 }
 
-const Content = (props) => {
+const Part = ( {part, exercises} ) => {
+  return (
+    <>
+      <p> {part} : {exercises} </p>
+    </>
+  );
+}
+
+const Content = ( {parts_exercises} ) => {
   return(
     <>
-      {Object.entries(props).map(([key, value]) => (
-        <p key={key}>{key}: {value}</p>
-      ))}
+      <Part part = {parts_exercises[0].part} exercises={parts_exercises[0].exercises} />
+      <Part part = {parts_exercises[1].part} exercises={parts_exercises[1].exercises} />
+      <Part part = {parts_exercises[2].part} exercises={parts_exercises[2].exercises} />
     </>
   )
 }
@@ -42,18 +50,18 @@ const App = () => {
   const part3 = 'State of a component'
   const exercises3 = 14
 
-  const parts_exercises = {
-    part1: exercises1,
-    part2: exercises2,
-    part3: exercises3,
-  };
+  const parts_exercises = [
+    { part: part1, exercises: exercises1 },
+    { part: part2, exercises: exercises2 },
+    { part: part3, exercises: exercises3 },
+  ];
 
   const exercises = [exercises1, exercises2, exercises3];
   
   return (
     <div>
       <Header course={course} />
-      <Content {...parts_exercises} />
+      <Content parts_exercises={parts_exercises} />
       <Total exercises = {exercises} />
     </div>
   )
