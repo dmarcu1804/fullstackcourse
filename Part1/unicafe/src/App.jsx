@@ -5,17 +5,38 @@ const Button = ( {handleClick, text} ) => (
   <button onClick = {handleClick}> {text} </button>
 )
 
-const Statistics = ( props ) => {
-  console.log(props)
-  const {good, neutral, bad, total, avg, positive} = props
+const StatisticLine = ( props ) => {
+  const {text, value} = props
+
+  if(text === "positive"){
+    return <p>{text} {value} %</p>
+  }
   return (
     <>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-      <p>average {avg}</p>
-      <p>positive {positive * 100} %</p>
+      <p>{text} {value}</p>
+    </>
+  )
+}
+
+const Statistics = ( props ) => {
+  const {good, neutral, bad, total, avg, positive} = props
+
+  if(total === 0){
+    return (
+      <>
+        <p>No feedback given yet</p>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <StatisticLine text = "good" value = {good} />
+      <StatisticLine text = "neutral" value = {neutral} />
+      <StatisticLine text = "bad" value = {bad} />
+      <StatisticLine text = "all" value = {total} />
+      <StatisticLine text = "average" value = {avg} />
+      <StatisticLine text = "positive" value = {positive} />
     </>
   )
 }
