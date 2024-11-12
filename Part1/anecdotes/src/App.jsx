@@ -13,22 +13,33 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const length = anecdotes.length
+  const [points, setPoints] = useState(Array.from({ length }).fill(0))
 
   const generateRandomQuote = () => {
-    const sizeAnecdotes = anecdotes.length;
-    
     let newIndex;
     
     do{
-      newIndex = Math.floor(Math.random() * sizeAnecdotes)
+      newIndex = Math.floor(Math.random() * length)
     }while(newIndex === selected);
 
     setSelected(newIndex)
   }
 
+  const getPoints = () => {
+    const updatedArr = [...points]
+    updatedArr[selected] += 1
+    setPoints(updatedArr)
+  }
+
   return (
     <div>
       <p>{anecdotes[selected]} </p>
+
+      <p>has {points[selected]} votes</p>
+      <button onClick={getPoints}>
+        vote
+      </button>
 
       <button onClick={generateRandomQuote}>
         next anecdotes
