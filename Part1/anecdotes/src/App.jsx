@@ -15,6 +15,7 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const length = anecdotes.length
   const [points, setPoints] = useState(Array.from({ length }).fill(0))
+  const [maxVal, setMaxVal] = useState(0)
 
   const generateRandomQuote = () => {
     let newIndex;
@@ -29,11 +30,13 @@ const App = () => {
   const getPoints = () => {
     const updatedArr = [...points]
     updatedArr[selected] += 1
+    setMaxVal(updatedArr.indexOf(Math.max(...updatedArr)))
     setPoints(updatedArr)
   }
 
   return (
     <div>
+      <h1> Anecdote of the day</h1>
       <p>{anecdotes[selected]} </p>
 
       <p>has {points[selected]} votes</p>
@@ -44,6 +47,9 @@ const App = () => {
       <button onClick={generateRandomQuote}>
         next anecdotes
       </button>
+
+      <h1> Anecdote with most votes </h1>
+      <p>{anecdotes[maxVal]} </p>
     </div>
   )
 }
