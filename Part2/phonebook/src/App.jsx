@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Filter from "./components/Filter";
+import AddPerson from "./components/AddPerson";
+import FullOutput from "./components/FullOutput";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -9,7 +12,6 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-
   const [filteredName, setFilteredName] = useState([]);
 
   const addPerson = (e) => {
@@ -18,6 +20,7 @@ const App = () => {
     const checkDuplicateName = persons.some(
       (person) => person.name === newName
     );
+
     if (checkDuplicateName) {
       alert(`${newName} is already added to phonebook`);
       setNewName("");
@@ -53,51 +56,31 @@ const App = () => {
 
   const handleNameFilter = (e) => {
     setFilteredName(e.target.value);
-  }
+  };
 
-  const namesToShow = persons.filter(person => person.name.includes(filteredName))
+  const namesToShow = persons.filter((person) =>
+    person.name.toLowerCase().includes(filteredName.toString().toLowerCase())
+  );
 
   return (
     <div>
       <h2>Phonebook</h2>
       <div>
-        filter shown with <input value={filteredName} onChange={handleNameFilter} />
+        filter shown with{" "}
+        <input value={filteredName} onChange={handleNameFilter} />
         <h1>Add a new Person</h1>
       </div>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number:{" "}
-          <input
-            type="number"
-            value={newNumber}
-            onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <AddPerson
+        addPerson={addPerson}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
       <div>
-        <h1>Filtered Output</h1>
-        {namesToShow.map((person) => (
-          <p key={person.name}>
-            {" "}
-            {person.name} {person.number}
-          </p>
-        ))}
-      </div>
-      <div>
-        <h1>Full output</h1>
-        {persons.map((person) => (
-          <p key={person.name}>
-            {" "}
-            {person.name} {person.number}
-          </p>
-        ))}
+        <Filter filteredPersons={namesToShow} />
+        <FullOutput persons={persons} />
       </div>
     </div>
   );
