@@ -1,15 +1,12 @@
 import React from "react";
 
-const Filter = ({ filteredPersons }) => {
+const Filter = ({ person, deletePerson }) => {
   return (
     <>
-      <h1>Filtered Output</h1>
-      {filteredPersons.map((person) => (
-        <p key={person.name}>
+      <p key={person.id}>
           {" "}
-          {person.name} {person.number}
-        </p>
-      ))}
+          {person.name} {person.number} {<button onClick = {deletePerson} > delete </button>}
+      </p>
     </>
   );
 };

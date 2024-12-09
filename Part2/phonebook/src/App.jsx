@@ -19,6 +19,17 @@ const App = () => {
     });
   }, []);
 
+  const deletePersonOf = (id) => {
+    const person = persons.find(p => p.id === id);
+    const confirmDelete = window.confirm(`Delete ${person.name} ?`)
+    if(!confirmDelete) return;
+
+    personService
+      .deletePerson(id)
+      .then(() => {
+        setPersons(persons.filter(p => p.id !== id))
+      })
+  }
   const addPerson = (e) => {
     e.preventDefault();
 
@@ -86,8 +97,22 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <div>
-        <Filter filteredPersons={namesToShow} />
-        <FullOutput persons={persons} />
+        <div>
+          <h1>Filtered Output</h1>
+          {namesToShow.map(person => (
+            <Filter key = {person.id} person={person} deletePerson={() => deletePersonOf(person.id)} />
+          ))}
+          {/* <Filter filteredPersons={namesToShow} /> */}
+        </div>
+
+
+        {/* <div>
+          <h1>Full Output</h1>
+          {persons.map(person => 
+            <FullOutput key = {person.id} person={person} deletePerson={() => deletePersonOf(person.id)}/>
+          )}
+        </div> */}
+        {/* <FullOutput persons={persons} deletePerson={() => deletePersonOf(persons.map(person => person.id))}/> */}
       </div>
     </div>
   );
