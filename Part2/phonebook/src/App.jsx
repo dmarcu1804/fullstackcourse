@@ -4,12 +4,15 @@ import AddPerson from "./components/AddPerson";
 import FullOutput from "./components/FullOutput";
 import axios from "axios";
 import personService from "./services/persons";
+import Notification from './components/Notification';
+import './App.css';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filteredName, setFilteredName] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('error happened...')
 
   useEffect(() => {
     personService
@@ -49,6 +52,12 @@ const App = () => {
       .then(returnedPerson => {
         setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
       })
+      setErrorMessage(
+        `Changed ${newName} number to new number: ${newNumber}`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
       setNewName("");
       setNewNumber("");
       return;
@@ -64,6 +73,13 @@ const App = () => {
       setNewName("");
       setNewNumber("");
     });
+
+    setErrorMessage(
+      `Added ${newName}`
+    )
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 5000)
   };
 
   const handleNameChange = (e) => {
@@ -85,6 +101,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message = {errorMessage} />
       <div>
         filter shown with{" "}
         <input value={filteredName} onChange={handleNameFilter} />
