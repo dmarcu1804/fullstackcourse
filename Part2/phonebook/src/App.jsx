@@ -52,6 +52,15 @@ const App = () => {
       .then(returnedPerson => {
         setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
       })
+      .catch(error => {
+        setErrorMessage(
+          `information of ${newName} has been deleted`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+
       setErrorMessage(
         `Changed ${newName} number to new number: ${newNumber}`
       )
