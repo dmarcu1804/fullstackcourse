@@ -30,6 +30,7 @@ const App = () => {
         setPersons(persons.filter(p => p.id !== id))
       })
   }
+
   const addPerson = (e) => {
     e.preventDefault();
 
@@ -38,19 +39,20 @@ const App = () => {
     );
 
     if (checkDuplicateName) {
-      alert(`${newName} is already added to phonebook`);
-      setNewName("");
-      return;
-    }
+      const person = persons.find(p => p.name === newName)
+      const changedPerson = {...person, number:newNumber}
+      const confirmUpdate = window.confirm(`${person.name} is already added to phonebook, replace phone number with new one??`)
+      if(!confirmUpdate) return;
 
-    const checkDuplicateNumber = persons.some(
-      (person) => person.number === newNumber
-    );
-    if (checkDuplicateNumber) {
-      alert(`${newNumber} is already added to phonebook`);
+      personService
+      .updatePerson(person.id, changedPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
+      })
+      setNewName("");
       setNewNumber("");
       return;
-    }
+    } 
 
     const personObject = {
       name: newName,
@@ -102,17 +104,7 @@ const App = () => {
           {namesToShow.map(person => (
             <Filter key = {person.id} person={person} deletePerson={() => deletePersonOf(person.id)} />
           ))}
-          {/* <Filter filteredPersons={namesToShow} /> */}
         </div>
-
-
-        {/* <div>
-          <h1>Full Output</h1>
-          {persons.map(person => 
-            <FullOutput key = {person.id} person={person} deletePerson={() => deletePersonOf(person.id)}/>
-          )}
-        </div> */}
-        {/* <FullOutput persons={persons} deletePerson={() => deletePersonOf(persons.map(person => person.id))}/> */}
       </div>
     </div>
   );
