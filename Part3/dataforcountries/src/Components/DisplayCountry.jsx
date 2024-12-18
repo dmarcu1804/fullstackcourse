@@ -13,7 +13,6 @@ const DisplayCountry = ({ countries, value }) => {
 
   const handleCountryChange = (country) => {
     setSelectedCountry(country);
-    console.log("Selected country updated:", country);
   };
 
   const filteredCountries = countries.filter((country) =>
@@ -39,6 +38,7 @@ const DisplayCountry = ({ countries, value }) => {
           </li>
         ))}
       </ul>
+      {/* checks if this is null and if it's not it displays the component */}
       {selectedCountry && <ShowInformation country = {selectedCountry} />}
     </div>
   );

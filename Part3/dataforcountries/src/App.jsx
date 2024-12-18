@@ -7,7 +7,6 @@ const App = () => {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    console.log("getting countries");
     if (!value) return;
 
     axios
