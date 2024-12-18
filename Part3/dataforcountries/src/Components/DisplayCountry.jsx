@@ -1,13 +1,19 @@
 import ShowInformation from "./ShowInformation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const DisplayCountry = ({ countries, value }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
+
+  // this ensures that the previous country that was showed is not displayed when searching for another one
+  useEffect(() => {
+    setSelectedCountry(null)
+  }, [value]);
 
   if (!countries) return null;
 
   const handleCountryChange = (country) => {
     setSelectedCountry(country);
+    console.log("Selected country updated:", country);
   };
 
   const filteredCountries = countries.filter((country) =>
