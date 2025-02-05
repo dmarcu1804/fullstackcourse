@@ -1,32 +1,14 @@
 const mongoose = require('mongoose')
 
-mongoose.set('strictQuery', false)
-
-const url = process.env.MONGODB_URL
-
-console.log('connecting to ', url)
-
-
-mongoose.connect(url)
-    .then(result => {
-        console.log('connected to MongoDB')
-    })
-    .catch(error => {
-        console.log('error connecting to MongoDB: ', error.message)
-    })
-
-
-
 const noteSchema = new mongoose.Schema({
   content: {
     type: String,
-    minLength: 5,
-    required: true
+    required: true,
+    minlength: 5
   },
   important: Boolean,
 })
 
-//tranforms the output into JSON and removes the __v field
 noteSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
