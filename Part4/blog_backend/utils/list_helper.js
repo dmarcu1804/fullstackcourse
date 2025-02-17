@@ -5,9 +5,6 @@ const dummy = (blogs) => {
 const totalLikes = (listOfBlogs) => {
     const result = 8
     let sum = 0
-    const reducer = (sum, item) => {
-        return sum + item
-    }
 
     listOfBlogs.forEach(list => {
         sum += list.likes
@@ -15,7 +12,18 @@ const totalLikes = (listOfBlogs) => {
     return sum
 }
 
+const favoriteBlog = (listOfBlogs) => {
+    const mostLikedBlog = listOfBlogs.reduce((max, blog) => (blog.likes > max.likes ? blog : max), listOfBlogs[0])
+
+    return listOfBlogs.length === 0 ? null : {
+        title: mostLikedBlog.title,
+        author: mostLikedBlog.author,
+        likes: mostLikedBlog.likes
+     }
+}
+
 module.exports = {
     dummy,
     totalLikes,
+    favoriteBlog,
 }
