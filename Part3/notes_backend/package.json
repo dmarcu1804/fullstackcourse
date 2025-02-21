@@ -4,10 +4,10 @@
   "description": "\"\"",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=test node --test"
+    "test": "NODE_ENV=test node --test"
   },
   "author": "Dragos",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
     "mongoose": "^8.9.5"
   },
   "devDependencies": {
