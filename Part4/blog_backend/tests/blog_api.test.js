@@ -11,26 +11,26 @@ const initialBlog = [
         title: "test1",
         author: "tester1",
         url: "test.com",
-        likes:25
+        likes: 25
     },
     {
         title: "test2",
         author: "tester2",
         url: "test2.com",
-        likes:15
+        likes: 15
     },
     {
         title: "test3",
         author: "tester3",
         url: "test3.com",
-        likes:10
+        likes: 10
     }
 ]
 
 beforeEach(async () => {
     await Blog.deleteMany({})
 
-    for(let blog of initialBlog){
+    for (let blog of initialBlog) {
         let blogObject = new Blog(blog)
 
         await blogObject.save()
@@ -45,7 +45,7 @@ test('blogs are returned as json', async () => {
         .expect('Content-Type', /application\/json/)
 })
 
-test.only('checking how many blogs there are', async () => {
+test('checking how many blogs there are', async () => {
     const response = await api.get('/api/blogs')
     assert.strictEqual(response.body.length, 3)
 })
@@ -53,7 +53,7 @@ test.only('checking how many blogs there are', async () => {
 test('check if the id name is correct', async () => {
     const response = await api.get('/api/blogs')
 
-    if(response.body.length > 0){
+    if (response.body.length > 0) {
         const blog = response.body[0]
 
         assert.ok(blog.id, 'id property shouild exist')
@@ -61,9 +61,29 @@ test('check if the id name is correct', async () => {
     }
 })
 
+test('a valid blog can be added', async () => {
+    const newBlog =
+    {
+        title: "Added1",
+        author: "add1",
+        url: "add.com",
+        likes: 123
+    }
 
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
-//test('a valid blog can be added')
+    const response = await api.get('/api/blogs')
+
+    const titles = response.body.map(r => r.title)
+
+    assert.strictEqual(response.body.length, initialBlog.length + 1)
+
+    assert(titles.includes('Added1'))
+})
 
 after(async () => {
     await mongoose.connection.close()
