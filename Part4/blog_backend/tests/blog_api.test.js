@@ -50,7 +50,20 @@ test.only('checking how many blogs there are', async () => {
     assert.strictEqual(response.body.length, 3)
 })
 
-test('a valid blog can be added')
+test('check if the id name is correct', async () => {
+    const response = await api.get('/api/blogs')
+
+    if(response.body.length > 0){
+        const blog = response.body[0]
+
+        assert.ok(blog.id, 'id property shouild exist')
+        assert.strictEqual(blog._id, undefined, '_id should be undefined')
+    }
+})
+
+
+
+//test('a valid blog can be added')
 
 after(async () => {
     await mongoose.connection.close()
